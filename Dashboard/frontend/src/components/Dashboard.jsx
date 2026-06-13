@@ -1,11 +1,9 @@
 import  { useState, useEffect } from 'react';
 import { AllCommunityModule } from 'ag-grid-community';
 import { AgGridReact, AgGridProvider } from 'ag-grid-react';
-
+import axios from 'axios';
 import Map from './Map';
 import Chart from './Chart';
-// temp data until backend is ready 
-import data from '../data/sample-animals.json';
 
 export default function Dashboard({ rescueTypes, selectedRescueType }) {
     // setup state for row data and columns
@@ -24,9 +22,9 @@ export default function Dashboard({ rescueTypes, selectedRescueType }) {
         { field: "outcome_subtype" },
         { field: "outcome_type" },
         { field: "sex_upon_outcome" },
-        { field: "location_lat" },
-        { field: "location_long" },
-        { field: "age_upon_outcome_in_weeks" }
+        { field: "latitude" },
+        { field: "longitude" },
+        { field: "age_upon_outcome_weeks" }
     ]);
 
     const [selectedAnimal, setSelectedAnimal] = useState(null);
@@ -34,33 +32,29 @@ export default function Dashboard({ rescueTypes, selectedRescueType }) {
     // fetch the data and set the state for row data on mount
     useEffect(() => {
 
-        // switch to fetch when api is ready 
-        // const data = async () => await fetch('/api/animals').then((response) => response.json()).catch((error) => console.error('Error fetching data:', error));
-
         // if no rescue type filter is selected, show all data
         if (!selectedRescueType) {
-            setRowData(data);
+            // make get request to backend api to fetch all animal data
+            axios.get('http://localhost:3000/api/animals')
+                .then((response) => {
+                    setRowData(response.data); // set row data to response json data of all animals
+                })
+                .catch((error) => console.error('Error fetching data:', error));
             return;
         }
 
         // filter data based on rescue type filter
-        const rescueTypePreferences = rescueTypes[selectedRescueType];
-        const filteredData = data.filter((animal) => {
-            const breedMatch = rescueTypePreferences.preferred_breeds.includes(animal.breed);
-            const sexMatch = animal.sex_upon_outcome === rescueTypePreferences.preferred_sex;
-            const ageMatch = animal.age_upon_outcome_in_weeks >= rescueTypePreferences.training_age[0] && animal.age_upon_outcome_in_weeks <= rescueTypePreferences.training_age[1];
-            return breedMatch && sexMatch && ageMatch;
-        })
-
-        setRowData(filteredData);
-
+        axios.get(`http://localhost:3000/api/animals/rescue/${selectedRescueType}`)
+            .then((response) => {
+                setRowData(response.data);
+            })
+            .catch((error) => console.error('Error fetching data:', error));
     }, [selectedRescueType]);
 
 
     const onRowSelection = (event) => {
         const selectedNodes = event.api.getSelectedNodes();
         const selectedData = selectedNodes.map(node => node.data);
-        // console.log('Selected data:', selectedData[0]); test
         setSelectedAnimal(selectedData[0]);
     }
 

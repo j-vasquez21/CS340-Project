@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export default function Map({ selectedAnimal }) {
 
-    const position = [selectedAnimal?.location_lat || 40.730610, selectedAnimal?.location_long || -73.935242];
+    const position = [selectedAnimal?.latitude || 40.730610, selectedAnimal?.longitude || -73.935242];
 
     function RecenterMap({ position }) {
         const map = useMap();
