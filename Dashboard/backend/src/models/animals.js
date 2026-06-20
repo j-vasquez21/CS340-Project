@@ -8,6 +8,7 @@ const AnimalModel = {
 
     readAllAnimals: async () => {
         try {
+            // Pool.query() gets connection from pool, executes query, and automatically releases the connection back to the pool
             const result = await Pool.query('SELECT * FROM animal_outcomes');
             return result.rows;
         } catch (err) {
