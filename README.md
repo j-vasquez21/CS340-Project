@@ -1,7 +1,13 @@
-# CS340-Project
+# Grazioso Salvare Rescue Animal Dashboard
 
-### How do you write programs that are maintainable, readable, and adaptable? Especially consider your work on the CRUD Python module from Project One, which you used to connect the dashboard widgets to the database in Project Two. What were the advantages of working in this way? How else could you use this CRUD Python module in the future?
+## Scenario
 
-### How do you approach a problem as a computer scientist? Consider how you approached the database or dashboard requirements that Grazioso Salvare requested. How did your approach to this project differ from previous assignments in other courses? What techniques or strategies would you use in the future to create databases to meet other client requests?
+This project serves to create a Dashboard to allow Grazioso Salvare to visualize the data regarding rescue animals. Grazioso Salvare's aim is to locate and recruit new animals with the intention of deploying these animals on rescue missions. The types of rescue missions that an animal can be deployed are water, mountain or wilderness, and disaster or individual tracking. Each of these types of mission requires a specific set of traits from the animal in order for them to be consider for the mission. By building an interactive dashboard, Grazioso Salvare can easily use filters to find potential animals that can be recruited for each mission. 
 
-### What do computer scientists do, and why does it matter? How would your work on this type of project help a company, like Grazioso Salvare, to do their work better?
+## Pre-Enhancment
+
+Initially this project was created for the course CS-340 at SNHU. You can find the initial codebase in the pre-enhancement directory. This original version of the project was created using Python and MongoDB. Python was used to create the dashboard and MongoDB was used for managing the data. 
+
+## Post-Enhancment
+
+As part of the CS-499 capstone course, I chose to enhance this project with the revised version being located in the Dashboard directory. This new version uses the PERN tech stack to create the web application.  
